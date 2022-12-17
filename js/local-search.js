@@ -1,26 +1,26 @@
-REDEFINE.initLocalSearch = () => {
+/* global CONFIG */
 
-  // Search DB path
-  let searchPath = REDEFINE.hexo_config.path;
-  if (!searchPath) {
-    // Search DB path
-    console.warn('`hexo-generator-searchdb` plugin is not installed!');
-    return;
-  }
-
+document.addEventListener('DOMContentLoaded', () => {
   // Popup Window
   let isfetched = false;
   let datas;
   let isXml = true;
+  // Search DB path
+  let searchPath = CONFIG.path;
   if (searchPath.length === 0) {
     searchPath = 'search.xml';
   } else if (searchPath.endsWith('json')) {
     isXml = false;
   }
-  const searchInputDom = document.querySelector('.search-input');
+  const input = document.querySelector('.search-input');
   const resultContent = document.getElementById('search-result');
 
   const getIndexByWord = (word, text, caseSensitive) => {
+    if (CONFIG.localsearch.unescape) {
+      let div = document.createElement('div');
+      div.innerText = word;
+      word = div.innerHTML;
+    }
     let wordLen = word.length;
     if (wordLen === 0) return [];
     let startPosition = 0;
@@ -31,7 +31,7 @@ REDEFINE.initLocalSearch = () => {
       word = word.toLowerCase();
     }
     while ((position = text.indexOf(word, startPosition)) > -1) {
-      index.push({position, word});
+      index.push({ position, word });
       startPosition = position + wordLen;
     }
     return index;
@@ -40,7 +40,7 @@ REDEFINE.initLocalSearch = () => {
   // Merge hits into slices
   const mergeIntoSlice = (start, end, index, searchText) => {
     let item = index[index.length - 1];
-    let {position, word} = item;
+    let { position, word } = item;
     let hits = [];
     let searchTextCountInSlice = 0;
     while (position + word.length <= end && index.length !== 0) {
@@ -90,7 +90,7 @@ REDEFINE.initLocalSearch = () => {
 
   const inputEventFunction = () => {
     if (!isfetched) return;
-    let searchText = searchInputDom.value.trim().toLowerCase();
+    let searchText = input.value.trim().toLowerCase();
     let keywords = searchText.split(/[-\s]+/);
     if (keywords.length > 1) {
       keywords.push(searchText);
@@ -98,7 +98,7 @@ REDEFINE.initLocalSearch = () => {
     let resultItems = [];
     if (searchText.length > 0) {
       // Perform local searching
-      datas.forEach(({title, content, url}) => {
+      datas.forEach(({ title, content, url }) => {
         let titleInLowerCase = title.toLowerCase();
         let contentInLowerCase = content.toLowerCase();
         let indexOfTitle = [];
@@ -132,7 +132,7 @@ REDEFINE.initLocalSearch = () => {
           let slicesOfContent = [];
           while (indexOfContent.length !== 0) {
             let item = indexOfContent[indexOfContent.length - 1];
-            let {position, word} = item;
+            let { position, word } = item;
             // Cut out 100 characters
             let start = position - 20;
             let end = position + 80;
@@ -161,7 +161,7 @@ REDEFINE.initLocalSearch = () => {
           });
 
           // Select top N slices in content
-          let upperBound = parseInt(REDEFINE.theme_config.local_search.top_n_per_article ? REDEFINE.theme_config.local_search.top_n_per_article : 1, 10);
+          let upperBound = parseInt(CONFIG.localsearch.top_n_per_article, 10);
           if (upperBound >= 0) {
             slicesOfContent = slicesOfContent.slice(0, upperBound);
           }
@@ -181,7 +181,7 @@ REDEFINE.initLocalSearch = () => {
           resultItem += '</li>';
           resultItems.push({
             item: resultItem,
-            id: resultItems.length,
+            id  : resultItems.length,
             hitCount,
             searchTextCount
           });
@@ -189,9 +189,9 @@ REDEFINE.initLocalSearch = () => {
       });
     }
     if (keywords.length === 1 && keywords[0] === '') {
-      resultContent.innerHTML = '<div id="no-result"><i class="fas fa-search fa-5x"></i></div>';
+      resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>';
     } else if (resultItems.length === 0) {
-      resultContent.innerHTML = '<div id="no-result"><i class="fas fa-box-open fa-5x"></i></div>';
+      resultContent.innerHTML = '<div id="no-result"><i class="far fa-frown fa-5x"></i></div>';
     } else {
       resultItems.sort((resultLeft, resultRight) => {
         if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
@@ -201,27 +201,22 @@ REDEFINE.initLocalSearch = () => {
         }
         return resultRight.id - resultLeft.id;
       });
-      let searchResultList = '<ul class="search-result-list">';
-      resultItems.forEach(result => {
-        searchResultList += result.item;
-      });
-      searchResultList += '</ul>';
-      resultContent.innerHTML = searchResultList;
+      resultContent.innerHTML = `<ul class="search-result-list">${resultItems.map(result => result.item).join('')}</ul>`;
       window.pjax && window.pjax.refresh(resultContent);
     }
   };
 
   const fetchData = () => {
-    fetch(REDEFINE.hexo_config.root + searchPath)
+    fetch(CONFIG.root + searchPath)
       .then(response => response.text())
       .then(res => {
         // Get the contents from search data
         isfetched = true;
         datas = isXml ? [...new DOMParser().parseFromString(res, 'text/xml').querySelectorAll('entry')].map(element => {
           return {
-            title: element.querySelector('title').textContent,
+            title  : element.querySelector('title').textContent,
             content: element.querySelector('content').textContent,
-            url: element.querySelector('url').textContent
+            url    : element.querySelector('url').textContent
           };
         }) : JSON.parse(res);
         // Only match articles with not empty titles
@@ -232,25 +227,32 @@ REDEFINE.initLocalSearch = () => {
           return data;
         });
         // Remove loading animation
-        const noResultDom = document.querySelector('#no-result');
-        noResultDom && (noResultDom.innerHTML = '<i class="fas fa-search fa-5x"></i>');
+        document.getElementById('no-result').innerHTML = '<i class="fa fa-search fa-5x"></i>';
+        inputEventFunction();
       });
   };
 
-  if (REDEFINE.theme_config.local_search.preload) {
+  if (CONFIG.localsearch.preload) {
     fetchData();
   }
 
-  if (searchInputDom) {
-    searchInputDom.addEventListener('input', inputEventFunction);
+  if (CONFIG.localsearch.trigger === 'auto') {
+    input.addEventListener('input', inputEventFunction);
+  } else {
+    document.querySelector('.search-icon').addEventListener('click', inputEventFunction);
+    input.addEventListener('keypress', event => {
+      if (event.key === 'Enter') {
+        inputEventFunction();
+      }
+    });
   }
 
   // Handle and trigger popup window
-  document.querySelectorAll('.search-popup-trigger').forEach(element => {
+  document.querySelectorAll('.popup-trigger').forEach(element => {
     element.addEventListener('click', () => {
       document.body.style.overflow = 'hidden';
-      document.querySelector('.search-pop-overlay').classList.add('active');
-      setTimeout(() => searchInputDom.focus(), 500);
+      document.querySelector('.search-pop-overlay').classList.add('search-active');
+      input.focus();
       if (!isfetched) fetchData();
     });
   });
@@ -258,18 +260,13 @@ REDEFINE.initLocalSearch = () => {
   // Monitor main search box
   const onPopupClose = () => {
     document.body.style.overflow = '';
-    document.querySelector('.search-pop-overlay').classList.remove('active');
+    document.querySelector('.search-pop-overlay').classList.remove('search-active');
   };
 
   document.querySelector('.search-pop-overlay').addEventListener('click', event => {
     if (event.target === document.querySelector('.search-pop-overlay')) {
       onPopupClose();
     }
-  });
-  document.querySelector('.search-input-field-pre').addEventListener('click', () => {
-    searchInputDom.value = '';
-    searchInputDom.focus();
-    inputEventFunction();
   });
   document.querySelector('.popup-btn-close').addEventListener('click', onPopupClose);
   window.addEventListener('pjax:success', onPopupClose);
@@ -278,5 +275,4 @@ REDEFINE.initLocalSearch = () => {
       onPopupClose();
     }
   });
-
-}
+});
