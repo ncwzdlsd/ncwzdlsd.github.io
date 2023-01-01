@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时记</title>
+    <script src="./config/vue.js"></script>
+    <script src="./config//marked.min.js"></script>
+    <script src="./config//moment.js"></script>
+    <script src="./config/FileSaver.js"></script>
+    <script src="./config//elementUI.js"></script>
+    <link rel="icon" href="./images/1232090.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/elemntUI.css">
+</head>
+
+<body>
+    <div id="app" @click="cancelExport">
+        <div class="header">
+            <div class="note">"自知什么都不像，平生就只像风"</div>
+            <div class="more">
+                <div class="export" @click.stop="exportNote"><span v-if="!lock">🔒</span> 导出笔记</div>
+                <transition name="fade">
+                    <div class="exportMenu" v-if="exportDetail">
+                        <div @click="deriveNote(1)">导出当前笔记</div>
+                        <div @click="deriveNote(2)">导出所有笔记</div>
+                    </div>
+                </transition>
+            </div>
+        </div>
+        <transition name="fade">
+            <div class="cover" v-if="lockFlag">
+                <div class="password box">
+                    <span class="rt" @click="rt">点我返回 😊</br>
+                    </span>
+                    <input type="text" v-model="password" :placeholder="tips" autofocus="autofocus"></input>
+                    <div class="unlock" @click="unclock">解锁</div>
+                </div>
+            </div>
+        </transition>
+        <div class="content">
+            <div class="menu box-shadow">
+                <div class="addNotes" @click="addNotes">
+                    新增笔记
+                </div>
+                <div class="list">
+                    <div class="item" v-for="item in sortedNotes" @click="selectNote(item.id)"
+                        :class="{selected:item==selectedNote}">{{item.title}} <span style="display: none;"
+                            v-if="item.favorite"><img src="./images//collection.png"></span></div>
+                </div>
+                <div class="tip">
+                    共 {{notes.length}} 条笔记
+                </div>
+            </div>
+            <template v-if="notes.length>0">
+                <div class="main box-shadow">
+                    <div class="head">
+                        <input type="text" v-model="selectedNote.title">
+                        <span class="imgBox">
+                            <img src="./images/collection.png" @click="favoriteNote" title="收藏"
+                                v-if="this.selectedNote.favorite">
+                            <img src="./images/discollection.png" @click="favoriteNote" title="收藏" v-else>
+                            <img src="./images//delete.png" @click="removeNote" title="删除">
+                        </span>
+                    </div>
+                    <textarea v-model="selectedNote.content"></textarea>
+                    <div class="tooltime">
+                        创建于 {{this.selectedNote.created|formateTime}}
+                    </div>
+                </div>
+                <!-- <div class="translate box-shadow" v-html="notePreview"></div> -->
+            </template>
+        </div>
+    </div>
+</body>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            notes: JSON.parse(localStorage.getItem('notes')) || [],
+            selectedId: localStorage.getItem('selectedId'),
+            tips: "请输入密码以解锁功能",
+            password: "",
+            lockFlag: false,
+            lock: localStorage.getItem('lock') || false,
+            exportDetail: false
+        },
+        computed: {
+            // notePreview() {
+            //     return this.selectedNote ? marked(this.selectedNote.content) : ''
+            // },
+            selectedNote() {
+                return this.notes.find(note => note.id == this.selectedId) || ''
+            },
+            sortedNotes() {
+                return this.notes.slice().sort((a, b) => (a.favorite === b.favorite) ? 0 : a.favorite ? -1 : 1)
+            }
+        },
+        watch: {
+            notes: {
+                handler: 'saveNotes',
+                deep: true // 深度监测
+            },
+            selectedId(val) {
+                localStorage.setItem('selectedId', val)
+            }
+        },
+        filters: {
+            formateTime(val) {
+                return moment(val).format('YY/MM/DD,HH:mm:ss')
+            }
+        },
+        methods: {
+            addNotes() {
+                const time = Date.now()
+                const note = {
+                    id: String(time),
+                    title: 'New Note',
+                    content: 'there is nothing...',
+                    created: time,
+                    favorite: false
+                }
+                this.notes.push(note)
+            },
+            saveNotes(val) {
+                localStorage.setItem('notes', JSON.stringify(this.notes))
+                if (this.notes.length == 1) {
+                    localStorage.setItem('selectedId', val[0].id)
+                    this.selectedId = val[0].id
+                }
+
+            },
+            selectNote(id) {
+                this.selectedId = id
+            },
+            removeNote() {
+                if (this.selectedNote && confirm('delete this note')) {
+                    const index = this.notes.indexOf(this.selectedNote)
+                    if (index !== -1) {
+                        this.notes.splice(index, 1)
+                    }
+                }
+            },
+            favoriteNote() {
+                this.selectedNote.favorite = !this.selectedNote.favorite
+            },
+            //导出文件
+            deriveNote(num) {
+                if (num == 1) {
+                    const filename = this.selectedNote.title
+                    const content = this.selectedNote.content
+                    const a = document.createElement('a')
+                    const blob = new Blob([content], { type: "application/msword;charset=utf-8" })
+                    a.download = filename
+                    a.href = URL.createObjectURL(blob)
+                    a.click()
+                    URL.revokeObjectURL(blob)
+                } else {
+                    this.notes.forEach(v => {
+                        const filename = v.title
+                        const content = v.content
+                        const a = document.createElement('a')
+                        const blob = new Blob([content], { type: "application/msword;charset=utf-8" })
+                        a.download = filename
+                        a.href = URL.createObjectURL(blob)
+                        a.click()
+                        URL.revokeObjectURL(blob)
+                    })
+                }
+
+            },
+            exportNote() {
+                if (!this.lock) {
+                    this.lockFlag = true
+                    localStorage.setItem('lock', true)
+                } else {
+                    this.exportDetail = !this.exportDetail
+                }
+            },
+            cancelExport() {
+                if (this.exportDetail) {
+                    this.exportDetail = false
+                }
+            },
+            unclock() {
+                if (!this.password) {
+                    this.tips = "密码为空"
+                }
+                if (this.password && this.password !== '123456') {
+                    this.password = null
+                    this.tips = "密码错误"
+                }
+                else {
+                    this.lockFlag = false
+                    this.lock = true
+                }
+            },
+            rt() {
+                this.lockFlag = false
+            }
+        },
+    })
+</script>
+
+</html>
