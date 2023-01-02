@@ -4,7 +4,7 @@
   
   
   <entry>
-    <title>深搜剪枝学习笔记</title>
+    <title>DFS剪枝学习笔记</title>
     <link href="/articles/%E6%B7%B1%E6%90%9C%E5%89%AA%E6%9E%9D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <url>/articles/%E6%B7%B1%E6%90%9C%E5%89%AA%E6%9E%9D%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     
@@ -13,14 +13,12 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-笔记</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>笔记</tag>
       
       <tag>DFS</tag>
       
@@ -42,14 +40,12 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-笔记</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>笔记</tag>
       
       <tag>图论</tag>
       
@@ -71,7 +67,7 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-笔记</category>
       
     </categories>
     
@@ -79,8 +75,6 @@
     <tags>
       
       <tag>数据结构</tag>
-      
-      <tag>笔记</tag>
       
       <tag>RMQ</tag>
       
@@ -100,14 +94,12 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-笔记</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>笔记</tag>
       
       <tag>数学</tag>
       
@@ -127,7 +119,7 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-笔记</category>
       
     </categories>
     
@@ -135,8 +127,6 @@
     <tags>
       
       <tag>数据结构</tag>
-      
-      <tag>笔记</tag>
       
       <tag>线段树</tag>
       
@@ -156,14 +146,12 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-笔记</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>笔记</tag>
       
       <tag>数学</tag>
       
@@ -235,7 +223,7 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-题解</category>
       
     </categories>
     
@@ -298,14 +286,12 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-笔记</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>笔记</tag>
       
       <tag>进制</tag>
       
@@ -325,7 +311,7 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-题解</category>
       
     </categories>
     
@@ -333,8 +319,6 @@
     <tags>
       
       <tag>数据结构</tag>
-      
-      <tag>题解</tag>
       
     </tags>
     
@@ -352,14 +336,12 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-笔记</category>
       
     </categories>
     
     
     <tags>
-      
-      <tag>笔记</tag>
       
       <tag>算法</tag>
       
@@ -406,7 +388,7 @@
     
     <categories>
       
-      <category>OI</category>
+      <category>-OI-笔记</category>
       
     </categories>
     
