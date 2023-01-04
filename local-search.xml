@@ -4,9 +4,9 @@
   
   
   <entry>
-    <title>简单贪心学习笔记</title>
-    <link href="/articles/%E7%AE%80%E5%8D%95%E8%B4%AA%E5%BF%83%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <url>/articles/%E7%AE%80%E5%8D%95%E8%B4%AA%E5%BF%83%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <title>贪心——从零基础到入门</title>
+    <link href="/articles/%E8%B4%AA%E5%BF%83%E2%80%94%E2%80%94%E4%BB%8E%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%88%B0%E5%85%A5%E9%97%A8/"/>
+    <url>/articles/%E8%B4%AA%E5%BF%83%E2%80%94%E2%80%94%E4%BB%8E%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%88%B0%E5%85%A5%E9%97%A8/</url>
     
     <content type="html"><![CDATA[<h3 id="简介">简介</h3><p>贪心算法是从问题的<strong>初始状态</strong>出发，通过若干次的贪心选择而得到的最优值（或较优值）。</p>]]></content>
     
@@ -344,13 +344,13 @@
     
     <tags>
       
+      <tag>笔记</tag>
+      
       <tag>Floyd算法</tag>
       
       <tag>最小环</tag>
       
       <tag>传递闭包</tag>
-      
-      <tag>笔记</tag>
       
     </tags>
     
@@ -375,9 +375,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>笔记</tag>
       
       <tag>Treap</tag>
       
@@ -406,9 +406,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>笔记</tag>
       
       <tag>BST</tag>
       
@@ -448,9 +448,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>笔记</tag>
       
       <tag>倍增</tag>
       
@@ -568,9 +568,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>笔记</tag>
       
       <tag>RMQ</tag>
       
@@ -624,9 +624,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>笔记</tag>
       
       <tag>线段树</tag>
       
@@ -826,9 +826,9 @@
     
     <tags>
       
-      <tag>笔记</tag>
-      
       <tag>数据结构</tag>
+      
+      <tag>笔记</tag>
       
       <tag>题解</tag>
       
