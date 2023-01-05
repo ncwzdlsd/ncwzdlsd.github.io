@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>整数快读模板</title>
+    <link href="/articles/%E6%95%B4%E6%95%B0%E5%BF%AB%E8%AF%BB%E6%A8%A1%E6%9D%BF/"/>
+    <url>/articles/%E6%95%B4%E6%95%B0%E5%BF%AB%E8%AF%BB%E6%A8%A1%E6%9D%BF/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title">read</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br><span class="hljs-type">int</span> x=<span class="hljs-number">0</span>,f=<span class="hljs-number">1</span>;<br><span class="hljs-type">char</span> ch=<span class="hljs-built_in">getchar</span>();<br><span class="hljs-keyword">while</span>(ch&gt;<span class="hljs-string">'9'</span>||ch&lt;<span class="hljs-string">'0'</span>){<span class="hljs-keyword">if</span>(ch==<span class="hljs-string">'-'</span>) f=<span class="hljs-number">-1</span>;ch=<span class="hljs-built_in">getchar</span>();}<br><span class="hljs-keyword">while</span>(ch&gt;=<span class="hljs-string">'0'</span>&amp;&amp;ch&lt;=<span class="hljs-string">'9'</span>){x=(x&lt;&lt;<span class="hljs-number">1</span>)+(x&lt;&lt;<span class="hljs-number">3</span>)+(ch^<span class="hljs-number">48</span>);ch=<span class="hljs-built_in">getchar</span>();}<br><span class="hljs-keyword">return</span> x*f;<br>}<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>OI</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>模板</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>倍增——从零基础到入门</title>
     <link href="/articles/%E5%80%8D%E5%A2%9E%E2%80%94%E2%80%94%E4%BB%8E%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%88%B0%E5%85%A5%E9%97%A8/"/>
     <url>/articles/%E5%80%8D%E5%A2%9E%E2%80%94%E2%80%94%E4%BB%8E%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%88%B0%E5%85%A5%E9%97%A8/</url>
