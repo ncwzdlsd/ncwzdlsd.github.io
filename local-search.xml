@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>lower_bound和upper_bound——从零基础到入门</title>
+    <link href="/articles/lower-bound%E5%92%8Cupper-bound%E2%80%94%E2%80%94%E4%BB%8E%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%88%B0%E5%85%A5%E9%97%A8/"/>
+    <url>/articles/lower-bound%E5%92%8Cupper-bound%E2%80%94%E2%80%94%E4%BB%8E%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%88%B0%E5%85%A5%E9%97%A8/</url>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><ol type="1"><li><code>lower_bound(begin,end,val)</code>：在值有序的数组连续地址[begin,end)中找到第一个位置并返回其地址，使得<code>val</code>插入在这个位置前面，整个数组仍然保持有序。</li><li><code>upper_bound(begin,end,val)</code>：在值有序的数组连续地址[begin,end)中找到最后一个位置并返回其地址，使得<code>val</code>插入在这个位置前面，整个数组仍然保持有序。</li></ol><p>假如排序后的数组名为<code>a</code>，可以认为其返回值减去数组名<code>a</code>（其实等于<code>a[0]</code>）刚好等于所要找的元素的数组下标。</p><p>我们可以用<code>lower_bound</code>和<code>upper_bound</code>求数的出现次数，即<code>upper_bound()-lower_bound()</code>。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>OI</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>笔记</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>整数快读模板</title>
     <link href="/articles/%E6%95%B4%E6%95%B0%E5%BF%AB%E8%AF%BB%E6%A8%A1%E6%9D%BF/"/>
     <url>/articles/%E6%95%B4%E6%95%B0%E5%BF%AB%E8%AF%BB%E6%A8%A1%E6%9D%BF/</url>
